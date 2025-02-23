@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="static/css/base-stylesheet.css"/>
+
+        <title>{% block title %} {{ title }} {% endblock title %}</title>
+    </head>
+
+    <header>
+        {% block header %}
+        {% include "_header.html" %}
+        {% endblock header %}
+    </header>
+
+    <body>
+    {% block content %}
+
+    {% endblock content %}
+    </body>
+
+    <footer>
+        {% block footer %}
+        {% include "_footer.html" %}
+        {% endblock footer %}
+    </footer>
+</html>
