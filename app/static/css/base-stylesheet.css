@@ -1,6 +1,19 @@
 
 body {
     background-color: antiquewhite;
+
+    margin:0px;
+    
+    header{
+        margin:0px;
+    }
+    footer {
+        margin:0px;
+    }
+
+    :not(header, footer) {
+        margin: 8px;
+    }
 }
 
 h1 {
