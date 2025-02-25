@@ -1,33 +1,94 @@
 <link rel="stylesheet" href="static/css/footer-stylesheet.css">
 
-<footer>
-    <div class="footer-container">
-        <div class="footer-logo-box">
-            <img src="static/assets/logo-square-placeholder.png">
-        </div>
-        <div class="footer-text-frame">
-            <ul >
-                <li>Explore</li>
-                <li>Available Items</li>
-                <li>Trending Pages</li>
-                <li>Best Sellers</li>
-            </ul>
-        </div>
-        <div class="footer-text-frame">
-            <ul>
-                <li>Learn</li>
-                <li>What's best for your body?</li>
-                <li>Popular Posts</li>
-            </ul>
-        </div>
-        <div class="footer-text-frame">
-            <ul>
-                <li>About Us</li>
-                <li>Our Company</li>
-                <li>Why Us?</li>
-                <br>
-                <li>Contact Us</li>
-            </ul>
-        </div>
+<style>
+    footer {
+        background-color: #003333;
+        width: 100%;
+        position: fixed;
+        bottom: 0px;
+
+        justify-content: end;
+        display:flex;
+    }
+
+    div.footer-section {
+        justify-content:flex-end;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: stretch;
+    }
+
+    div.footer-col {
+        flex-grow: 1;
+        flex-basis: 0;
+        transition: flex-grow .3s;
+    }
+
+    div.col-expand:hover {
+          flex-grow: 1.1;
+          transition: flex-grow .3s;
+        }
+</style>
+
+<footer class="text-center text-lg-start text-white" >
+
+    <div class="container p-4 pb-0">
+        <section class="">
+            <div class="row footer-section">
+
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3 footer-col" style="justify:start;">
+                <img src="static/placeholder.jpg">
+            </div>
+
+          <!-- Grid column -->
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3 footer-col col-expand">
+            <h6 class="text-uppercase mb-4 font-weight-bold">Explore</h6>
+            <p>
+              <a class="text-white">Available Items</a>
+            </p>
+            <p>
+              <a class="text-white">Trending Pages</a>
+            </p>
+            <p>
+              <a class="text-white">Best Sellers</a>
+            </p>
+          </div>
+          <!-- Grid column -->
+
+
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3 footer-col col-expand">
+            <h6 class="text-uppercase mb-4 font-weight-bold">
+              Learn
+            </h6>
+            <p>
+              <a class="text-white">What's best for your body?</a>
+            </p>
+            <p>
+              <a class="text-white">Popular Posts</a>
+            </p>
+          </div>
+
+                <!-- Grid column -->
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3 footer-col col-expand">
+            <h6 class="text-uppercase mb-4 font-weight-bold">
+              About Us
+            </h6>
+            <p>
+              <a class="text-white">Our Company</a>
+            </p>
+            <p>
+              <a class="text-white">Why Us</a>
+            </p>
+              <br>
+              <p>
+              <a class="text-white">Contact Us</a>
+            </p>
+          </div>
+
+
+            </div>
+        </section>
     </div>
+
 </footer>
