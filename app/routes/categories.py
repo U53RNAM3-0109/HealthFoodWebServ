@@ -1,4 +1,5 @@
 import base64
+
 import requests
 from flask import Blueprint, url_for, request, flash, render_template, current_app
 from flask_login import login_required, current_user
@@ -77,7 +78,7 @@ def category_submit():
     else:
         return redirect(url_for('dashboard.dashboard'))
 
-@cat_bp.route('/delete/category/<category_name>')
+@cat_bp.route('/delete/category/<category_name>', methods=['POST'])
 def delete_category(category_name):
     if current_user.is_admin:
         url = f"{current_app.config["API_BASE_URL"]}/category/{category_name}"

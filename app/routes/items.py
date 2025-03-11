@@ -96,7 +96,7 @@ def item_submit():
         return redirect(url_for('dashboard.dashboard'))
 
 
-@item_bp.route('/delete/item/<item_id>')
+@item_bp.route('/delete/item/<item_id>', methods=['POST'])
 def delete_item(item_id):
     if current_user.is_admin:
         url = f"{current_app.config["API_BASE_URL"]}/item/{item_id}"
@@ -111,7 +111,7 @@ def delete_item(item_id):
             print(f"Request Error: {e}")
             return render_template('api_error.html'), 503
 
-        if response["response"] == 200:
+        if response.get('response',None) == 200:
             flash("Item removed.", "success")
             return redirect(url_for('dashboard.dashboard'))
 
