@@ -1,5 +1,31 @@
-{% extends "base.html" %}
-{% block content %}
-<h1>This is some content</h1>
-{% endblock content %}
+{% extends 'base.html' %}
 
+{% block title %}Dashboard{% endblock %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <div class="jumbotron text-center bg-secondary text-light p-5 rounded-3">
+
+        {% if current_user.is_authenticated %}
+        <h1 class="display-4 fw-bold">Welcome to the Dashboard, {{current_user.firstname}}!</h1>
+        {% else %}
+        <h1 class="display-4 fw-bold">Welcome to the Dashboard</h1>
+        {% endif %}
+        <p class="lead">Explore our offers.</p>
+    </div>
+
+    {% if category_data %}
+        {% include '_categories.html' %}
+    {% else %}
+        <p class="mt-4">No categories available.</p>
+    {% endif %}
+
+    {% if current_user.is_admin %}
+     <div class="d-flex gap-3 mt-4">
+        <a href="{{ url_for('category.category_submit')}}" class="btn btn-secondary">Add category</a>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
