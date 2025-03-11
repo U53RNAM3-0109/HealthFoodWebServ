@@ -1,0 +1,24 @@
+<div class="container mt-4 mb-5">
+    <h2>Our Categories</h2>
+
+    {% if category_data %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for category in category_data %}
+        <div class="col">
+            <div class="card h-100 shadow-lg bg-secondary rounded-3 overflow-hidden">
+                {% if category.image_64 and category.image_format %}
+                <img src="data:{{ category.image_format }};base64,{{ category.image_64 }}" class="card-img-top img-fluid" alt="{{ category.title }} image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title text-light">{{ category.title }}</h5>
+                    <p class="card-text text-light">{{ category.snippet }}</p>
+                    <a href="{{ url_for('category.category_items', category_name=category.url_ext) }}" class="btn btn-primary">View Category</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No categories available.</p>
+    {% endif %}
+</div>
