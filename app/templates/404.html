@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}404{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h1 class="display-1 text-danger">404</h1>
+    <h3 class="text-muted">Oops! The page you are looking for does not exist.</h3>
+    <p>It seems that the page you're trying to access is missing or doesn't exist. Please check the URL or go back to the homepage.</p>
+    <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-primary">Back to Home</a>
+</div>
+{% endblock %}
