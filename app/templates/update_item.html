@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Item{% endblock %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Edit Item: {{ item.title }}</h2>
+
+    {% if item.image_64 and item.image_format %}
+    <div class="text-center mb-4">
+        <img src="data:{{ item.image_format }};base64,{{ item.image_64 }}" class="img-fluid rounded" alt="{{ item.title }} image">
+    </div>
+    {% endif %}
+
+    <form action="{{ url_for('item.update_item', item_id=item.id) }}" method="POST" enctype="multipart/form-data" class="mt-3">
+        <input type="hidden" name="item_id" value="{{ item.id }}">
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control form-control-sm" id="title" name="title" placeholder="{{ item.title }}">
+            </div>
+
+            <div class="col-md-6">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select form-select-sm" id="category" name="category" required>
+                    {% for category in categories %}
+                    <option value="{{ category.url_ext }}" {% if category.url_ext == item.category_url %}selected{% endif %}>{{ category.title }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" class="form-control form-control-sm" id="price" name="price" value="{{ item.price }}" step="0.01" required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="image_f" class="form-label">Replace Image</label>
+                <input type="file" class="form-control form-control-sm" id="image_f" name="image_f">
+            </div>
+
+            <div class="col-md-6">
+                <label for="snippet" class="form-label">Snippet</label>
+                <input type="text" class="form-control form-control-sm" id="snippet" name="snippet" placeholder="{{ item.snippet }}">
+            </div>
+
+            <div class="col-12">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control form-control-sm" id="description" name="description" rows="3">{{ item.description }}</textarea>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Update Item</button>
+            <a href="{{ url_for('item.item_detail', item_id=item.id) }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

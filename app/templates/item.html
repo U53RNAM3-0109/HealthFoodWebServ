@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}{{item_data.title}}{% endblock %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ item_data.title }}</h2>
+
+    {% if item_data.image_64 and item_data.image_format %}
+    <div class="text-center mb-4">
+        <img src="data:{{ item_data.image_format }};base64,{{ item_data.image_64 }}" class="img-fluid rounded" alt="{{ item_data.title }} image">
+    </div>
+    {% endif %}
+
+    <p><strong>Price:</strong> ${{ item_data.price }}</p>
+    <p>{{ item_data.description }}</p>
+
+    <a href="{{ url_for('category.category_items', category_name=item_data.cat_url_ext) }}" class="btn btn-secondary">Back to Category</a>
+
+    {% if current_user.is_admin %}
+    <div class="d-flex gap-3 mt-4">
+        <a href="{{ url_for('item.update_item', item_id=item_data.id) }}" class="btn btn-secondary">Edit Item</a>
+
+        <form action="{{ url_for('item.delete_item', item_id=item_data.id) }}" method="POST">
+            <button type="submit" class="btn btn-danger text-dark" onclick="return confirm('Are you sure you want to delete this item?')">Delete Item</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
