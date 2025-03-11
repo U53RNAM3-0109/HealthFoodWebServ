@@ -1,59 +1,52 @@
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
 import requests as req
 import json
 from argparse import ArgumentParser
 
+from routes.items import item_bp
+from routes.categories import cat_bp
+from routes.dashboard import dash_bp
+from routes.api.user import User
+from flask_login import current_user, LoginManager
+
 app = Flask(__name__)
+app.secret_key = "secret"
+app.config["API_BASE_URL"] = "http://127.0.0.1:8080"
 
-@app.route("/")
-def index():
-    return render_template('login_signup.html', resp="")
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "auth.login"
 
-API_HOST = "http://52.156.24.253"  # Replace with your actual API hostname
+@login_manager.user_loader
+def load_user(user_id):
+    response = req.post(f"{app.config["API_BASE_URL"] }/user/{user_id}").json()
+    if response["response"] == 200:
+        data = response["data"]
+        print(f"User created with email {data["email"]}")
+        return User(user_id=data["id"],
+                    firstname=data["firstname"],
+                    lastname=data["lastname"],
+                    email=data["email"],
+                    is_admin=data["is_admin"])
+    return None
 
+from routes.auth import auth_bp
 
-@app.route('/user', methods=['POST'])
-def create_user():
-    # Get data from the request
-    parser = ArgumentParser
-    parser.add_argument("email", type=str)
-    parser.add_argument("password", type=str)
-    parser.add_argument("firstname", type=str)
-    parser.add_argument("lastname", type=str)
-    parser.add_argument("usertype", type=str)
+app.register_blueprint(auth_bp)
+app.register_blueprint(dash_bp)
+app.register_blueprint(cat_bp)
+app.register_blueprint(item_bp)
 
-    data = parser.parse_args()
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
 
-    print(data['firstname'])
-
-    # Send data to the API
-    response = req.post(f"{API_HOST}/user", json=data)
-
-    data = json.loads(response)
-
-    if data["response"] == 200:
-        return render_template("login_signup.html", resp="User created!")
-    else:
-        return render_template("login_signup.html", resp=f"User not created!\nMessage:{data['message']}")
-
-
-@app.route('/auth', methods=['POST'])
-def login_user():
-    # Get login data from request
-    data = request.json
-    # Send login request to the API
-    response = req.post(f"{API_HOST}/auth", json=data)
-
-    data = json.loads(response)
-
-    if data["response"] == 200:
-        return render_template("login_signup.html", resp=f"Logged in! User:{data['data']['id']}")
-    else:
-        return render_template("login_signup.html", resp=f"User not logged in\nMessage:{data['message']}")
+@app.errorhandler(503)
+def service_unavailable(error):
+    return render_template('api_error.html'), 503
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
 
-app.run(debug=True)
