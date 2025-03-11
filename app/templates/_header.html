@@ -1,27 +1,22 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <!-- Logo & Brand -->
             <a class="navbar-brand" href="{{url_for('dashboard.dashboard')}}">
                 <img src="/static/assets/logo-square-placeholder.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
                 Whole Health Foods
             </a>
 
 
-            <!-- Mobile Toggle Button -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Collapsible Navbar -->
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- Left-aligned Navigation -->
                 <ul class="navbar-nav me-auto">
 
                 </ul>
 
-                <!-- Right-aligned User Links -->
                 <ul class="navbar-nav">
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
