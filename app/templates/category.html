@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}{{category_data.title}}{% endblock %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ category_data.title }}</h2>
+
+    {% if category_data.image_64 and category_data.image_format %}
+    <div class="text-center mb-4">
+        <img src="data:{{ category_data.image_format }};base64,{{ category_data.image_64 }}" class="img-fluid rounded" alt="{{ category_data.title }} image">
+    </div>
+    {% endif %}
+
+    <p>{{ category_data.description }}</p>
+
+    <h3 class="mt-4">Items</h3>
+
+    {% if category_data.items %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for item in category_data.cat_items %}
+        <div class="col">
+            <div class="card h-100 shadow-lg bg-secondary rounded-3 overflow-hidden">
+                {% if item.image_64 and item.image_format %}
+                <img src="data:{{ item.image_format }};base64,{{ item.image_64 }}" class="card-img-top img-fluid" alt="{{ item.title }} image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title text-light">{{ item.title }}</h5>
+                    <p class="card-text text-light">{{ item.snippet }}</p>
+                    <p><strong class="text-light">Price:</strong> ${{ item.price }}</p>
+                    <a href="{{ url_for('item.item_details', item_id=item.id) }}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No items found in this category.</p>
+    {% endif %}
+
+    {% if current_user.is_admin %}
+
+    <div class="d-flex gap-3 mt-4">
+        <a href="{{ url_for('item.item_submit')}}" class="btn btn-secondary">Add item</a>
+
+        <a href="{{ url_for('category.update_category', category_name=category_data.url_ext) }}" class="btn btn-secondary">Edit Category</a>
+
+        <form action="{{ url_for('category.category_items', category_name=category_data.url_ext, delete=true)}}" method="POST">
+            <button type="submit" class="btn btn-danger text-dark " onclick="return confirm('Are you sure you want to delete this category?')">Delete Category</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

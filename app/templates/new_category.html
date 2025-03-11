@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}New Category{% endblock %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Create a New Category</h2>
+    
+    <form action="{{ url_for('category.category_submit') }}" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="title" class="form-label">Category Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="url_ext" class="form-label">URL Extension</label>
+            <input type="text" class="form-control" id="url_ext" name="url_ext" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload Image</label>
+            <input type="file" class="form-control" id="image" name="image" accept="image/jpeg, image/png" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="snippet" class="form-label">Snippet</label>
+            <input type="text" class="form-control" id="snippet" name="snippet" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

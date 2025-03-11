@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Category{% endblock %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Edit Category: {{ category.title }}</h2>
+
+    {% if category.image_64 and category.image_format %}
+    <div class="text-center mb-4">
+        <img src="data:{{ category.image_format }};base64,{{ category.image_64 }}" class="img-fluid rounded" alt="{{ category.title }} image">
+    </div>
+    {% endif %}
+
+    <form action='{{url_for('category.update_category', category_name=category.url_ext)}}' method="POST" enctype="multipart/form-data" class="mt-3">
+        <input type="hidden" name="url_ext" value="{{ category.url_ext }}">
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control form-control-sm" id="title" name="title" placeholder="{{ category.title }}">
+            </div>
+
+            <div class="col-md-6">
+                <label for="url_ext_display" class="form-label">URL Extension</label>
+                <input type="text" class="form-control form-control-sm" id="url_ext_display" placeholder="{{ category.url_ext }}" disabled>
+            </div>
+
+            <div class="col-md-6">
+                <label for="image_f" class="form-label">Replace Image</label>
+                <input type="file" class="form-control form-control-sm" id="image_f" name="image_f">
+            </div>
+
+            <div class="col-md-6">
+                <label for="snippet" class="form-label">Snippet</label>
+                <input type="text" class="form-control form-control-sm" id="snippet" name="snippet" placeholder="{{ category.snippet }}">
+            </div>
+
+            <div class="col-12">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control form-control-sm" id="description" name="description" rows="3">{{ category.description }}</textarea>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Update Category</button>
+            <a href="{{ url_for('category.category_items', category_name=category.url_ext) }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
